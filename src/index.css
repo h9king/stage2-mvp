@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Pretendard', system-ui, sans-serif;
+    background-color: #FDFBF7;
+    color: #2C1810;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-sans font-semibold px-6 py-3 rounded-btn
+           min-h-[48px] text-sm hover:bg-primary-dark transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-primary border-2 border-primary font-sans font-semibold
+           px-6 py-3 rounded-btn min-h-[48px] text-sm hover:bg-primary hover:text-white
+           transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card p-6;
+  }
+
+  .page-container {
+    @apply max-w-4xl mx-auto px-4 py-8;
+  }
+}
