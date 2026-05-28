@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import ImageUpload from '../components/ImageUpload'
 
 const RELATIONSHIP_OPTIONS = [
   { value: 'spouse',      label: '배우자' },
@@ -28,6 +29,8 @@ export default function SpaceEditPage() {
     name: '', relationship: '', birth_year: '', death_year: '',
     bio: '', life_story: '',
   })
+  const [profileImageUrl, setProfileImageUrl] = useState(null)
+  const [coverImageUrl, setCoverImageUrl] = useState(null)
 
   const currentYear = new Date().getFullYear()
 
@@ -49,6 +52,8 @@ export default function SpaceEditPage() {
       bio:          data.bio || '',
       life_story:   data.life_story || '',
     })
+    setProfileImageUrl(data.profile_image_url || null)
+    setCoverImageUrl(data.cover_image_url || null)
     setLoading(false)
   }
 
@@ -67,13 +72,15 @@ export default function SpaceEditPage() {
     const { error: dbError } = await supabase
       .from('spaces')
       .update({
-        name:         form.name.trim(),
-        relationship: form.relationship,
-        birth_year:   form.birth_year ? parseInt(form.birth_year) : null,
-        death_year:   form.death_year ? parseInt(form.death_year) : null,
-        bio:          form.bio.trim(),
-        life_story:   form.life_story.trim(),
-        is_self:      form.relationship === 'self',
+        name:              form.name.trim(),
+        relationship:      form.relationship,
+        birth_year:        form.birth_year ? parseInt(form.birth_year) : null,
+        death_year:        form.death_year ? parseInt(form.death_year) : null,
+        bio:               form.bio.trim(),
+        life_story:        form.life_story.trim(),
+        is_self:           form.relationship === 'self',
+        profile_image_url: profileImageUrl,
+        cover_image_url:   coverImageUrl,
       })
       .eq('id', id)
       .eq('owner_id', user.id)
@@ -178,6 +185,45 @@ export default function SpaceEditPage() {
               <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '14px', color: 'rgb(252,165,165)', margin: 0 }}>{error}</p>
             </div>
           )}
+
+          {/* 사진 카드 */}
+          <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '32px', marginBottom: '16px' }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: '#fff', marginBottom: '8px', fontWeight: 600 }}>
+              사진
+            </h2>
+            <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.35)', marginBottom: '28px' }}>
+              JPG, PNG, WebP 지원 · 최대 10MB
+            </p>
+            <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+              {/* 프로필 사진 */}
+              <div>
+                <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>프로필 사진</p>
+                <ImageUpload
+                  currentUrl={profileImageUrl}
+                  storagePath={`profiles/${id}`}
+                  onUploaded={url => { setProfileImageUrl(url); setSuccess('') }}
+                  label="사진 변경"
+                  shape="circle"
+                  size={100}
+                />
+              </div>
+              {/* 커버 사진 */}
+              <div style={{ flex: 1, minWidth: '200px' }}>
+                <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>커버 사진</p>
+                <ImageUpload
+                  currentUrl={coverImageUrl}
+                  storagePath={`covers/${id}`}
+                  onUploaded={url => { setCoverImageUrl(url); setSuccess('') }}
+                  label="커버 사진 업로드"
+                  shape="rect"
+                  size={200}
+                />
+              </div>
+            </div>
+            <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.25)', marginTop: '20px' }}>
+              ✦ 사진 업로드 후 하단 "변경사항 저장" 버튼을 눌러야 적용됩니다.
+            </p>
+          </div>
 
           {/* 기본 정보 카드 */}
           <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '32px', marginBottom: '16px' }}>

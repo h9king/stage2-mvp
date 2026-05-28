@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import MemoryGallery from '../components/MemoryGallery'
 
 const RELATIONSHIP_LABELS = {
   spouse: '배우자', parent: '부모님', child: '자녀',
@@ -225,18 +226,9 @@ export default function SpaceViewPage() {
             )
           )}
 
-          {/* 추억 영상관 — Coming Soon */}
+          {/* 추억 영상관 — MemoryGallery */}
           {activeTab === 'memories' && (
-            <div style={{ textAlign: 'center', padding: '80px 24px', background: '#111', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: '20px' }}>
-              <div style={{ fontSize: '40px', marginBottom: '16px', opacity: 0.4 }}>🎬</div>
-              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: '#fff', marginBottom: '8px' }}>추억 영상관</p>
-              <p style={{ fontFamily: 'Pretendard, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.35)', marginBottom: '20px' }}>
-                사진과 영상을 업로드하는 기능이 곧 준비됩니다.
-              </p>
-              <span style={{ background: 'rgba(242,212,155,0.1)', color: '#F2D49B', border: '1px solid rgba(242,212,155,0.25)', borderRadius: '100px', padding: '6px 16px', fontFamily: 'Pretendard, sans-serif', fontSize: '12px', fontWeight: 700 }}>
-                Coming Soon
-              </span>
-            </div>
+            <MemoryGallery spaceId={id} isOwner={isOwner} />
           )}
 
           {/* 목소리 보관함 — Coming Soon */}
