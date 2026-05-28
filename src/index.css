@@ -1,40 +1,135 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS v4 */
+@import "tailwindcss";
 
-@layer base {
-  html {
-    font-family: 'Pretendard', system-ui, sans-serif;
-    background-color: #FDFBF7;
-    color: #2C1810;
-  }
+/* STAGE2 디자인 토큰 */
+@theme {
+  /* 색상 */
+  --color-primary: #C9A84C;
+  --color-primary-light: #DFC277;
+  --color-primary-dark: #A07A2A;
 
-  * {
-    box-sizing: border-box;
-  }
+  --color-background: #FDFBF7;
+  --color-background-card: #FFFFFF;
+
+  --color-brand-brown: #2C1810;
+  --color-brand-green: #7BA05B;
+  --color-brand-cream: #F5F0E8;
+
+  /* 폰트 */
+  --font-family-serif: 'Noto Serif KR', Georgia, serif;
+  --font-family-display: 'Playfair Display', Georgia, serif;
+  --font-family-sans: 'Pretendard', system-ui, sans-serif;
+
+  /* 폰트 크기 - 60대 사용자 접근성 기준 (최소 16px) */
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 30px;
+  --font-size-3xl: 36px;
+  --font-size-4xl: 48px;
+  --font-size-5xl: 60px;
+
+  /* 간격 */
+  --spacing-touch: 48px;
+
+  /* 모서리 */
+  --radius-card: 16px;
+  --radius-btn: 12px;
+
+  /* 그림자 */
+  --shadow-card: 0 2px 20px rgba(44, 24, 16, 0.08);
+  --shadow-card-hover: 0 8px 32px rgba(44, 24, 16, 0.15);
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary text-white font-sans font-semibold px-6 py-3 rounded-btn
-           min-h-[48px] text-sm hover:bg-primary-dark transition-colors duration-200
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
+/* 기본 스타일 */
+html {
+  font-family: 'Pretendard', system-ui, sans-serif;
+  background-color: #FDFBF7;
+  color: #2C1810;
+}
 
-  .btn-secondary {
-    @apply bg-transparent text-primary border-2 border-primary font-sans font-semibold
-           px-6 py-3 rounded-btn min-h-[48px] text-sm hover:bg-primary hover:text-white
-           transition-colors duration-200;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  .card {
-    @apply bg-white rounded-card shadow-card p-6;
-  }
+/* 공통 컴포넌트 */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #C9A84C;
+  color: white;
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 12px;
+  min-height: 48px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+.btn-primary:hover {
+  background-color: #A07A2A;
+  box-shadow: 0 4px 12px rgba(44, 24, 16, 0.2);
+  transform: translateY(-1px);
+}
+.btn-primary:focus {
+  outline: 2px solid #C9A84C;
+  outline-offset: 2px;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
 
-  .page-container {
-    @apply max-w-4xl mx-auto px-4 py-8;
-  }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #C9A84C;
+  border: 2px solid #C9A84C;
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 12px;
+  min-height: 48px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s;
+}
+.btn-secondary:hover {
+  background-color: #C9A84C;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+  padding: 24px;
+}
+
+.page-container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* 스피너 애니메이션 */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
