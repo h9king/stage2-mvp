@@ -6,6 +6,7 @@ import AuthPage from './pages/AuthPage'
 import DashboardPage from './pages/DashboardPage'
 import SpaceCreatePage from './pages/SpaceCreatePage'
 import SpaceViewPage from './pages/SpaceViewPage'
+import SpaceEditPage from './pages/SpaceEditPage'
 import './index.css'
 
 function App() {
@@ -48,6 +49,14 @@ function App() {
             element={
               <PrivateRoute>
                 <SpaceViewPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/space/:id/edit"
+            element={
+              <PrivateRoute>
+                <SpaceEditPage />
               </PrivateRoute>
             }
           />
